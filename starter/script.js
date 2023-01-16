@@ -427,3 +427,46 @@ Los métodos "calcAge()" e "introduce()" se encuentran en las clases "PersonCl" 
 const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
 martha.introduce();
 martha.calcAge();
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+
+    //protected property (_is a convention , it means it is not supposed to be touched)
+    this._movements = [];
+    this._pin = pin;
+    this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+
+  //public interface
+
+  getMovements() {
+    return this._movements;
+  }
+  deposit(val) {
+    this._movements.push(val);
+  }
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  //protected methods
+  _approveLoan(val) {
+    return true;
+  }
+
+  _requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved`);
+    }
+  }
+}
+const acc1 = new Account('Jonas', 'EUR', 1111);
+acc1.deposit(250);
+acc1.withdraw(140);
+console.log(acc1);
+console.log(acc1.getMovements());
