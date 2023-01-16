@@ -455,18 +455,19 @@ class Account {
   }
   //3 public methods
   //public interface
-
   getMovements() {
     return this.#movements;
   }
+
   deposit(val) {
     this.#movements.push(val);
-  }
-  withdraw(val) {
-    this.deposit(-val);
+    return this;
   }
 
-  //protected methods
+  withdraw(val) {
+    this.deposit(-val);
+    return this;
+  }
 
   requestLoan(val) {
     // if (this.#approveLoan(val)) {
@@ -492,4 +493,10 @@ const acc1 = new Account('Jonas', 'EUR', 1111);
 acc1.deposit(250);
 acc1.withdraw(140);
 console.log(acc1);
+console.log(acc1.getMovements());
+Account.helper();
+
+// Chaining
+
+acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(300);
 console.log(acc1.getMovements());
