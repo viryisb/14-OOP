@@ -428,43 +428,66 @@ const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
 martha.introduce();
 martha.calcAge();
 
+//1 Public fields
+//2 public methods
+//3 public methods
+//4 private methods
+
+//(there is also the static version of those 4)
 class Account {
+  //1 public fields are in the instances, not in the prototype
+  locale = navigator.languaje;
+
+  //2 private fields (instance itself, not prototype)
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
 
     //protected property (_is a convention , it means it is not supposed to be touched)
-    this._movements = [];
-    this._pin = pin;
-    this.locale = navigator.language;
+    //this._movements = [];
+    this.#pin = pin;
+    //this.locale = navigator.language;
 
     console.log(`Thanks for opening an account, ${owner}`);
   }
-
+  //3 public methods
   //public interface
 
   getMovements() {
-    return this._movements;
+    return this.#movements;
   }
   deposit(val) {
-    this._movements.push(val);
+    this.#movements.push(val);
   }
   withdraw(val) {
     this.deposit(-val);
   }
 
   //protected methods
-  _approveLoan(val) {
-    return true;
-  }
 
-  _requestLoan(val) {
+  requestLoan(val) {
+    // if (this.#approveLoan(val)) {
     if (this._approveLoan(val)) {
       this.deposit(val);
       console.log(`Loan approved`);
+      return this;
     }
   }
+
+  static helper() {
+    console.log('Helper');
+  }
+
+  // 4) Private methods
+  // #approveLoan(val) {
+  _approveLoan(val) {
+    return true;
+  }
 }
+
 const acc1 = new Account('Jonas', 'EUR', 1111);
 acc1.deposit(250);
 acc1.withdraw(140);
